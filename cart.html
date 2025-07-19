@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>My Cart | Night Chain</title>
+  <style>
+    body { background-color: #000; color: gold; font-family: 'Georgia', serif; padding: 20px; }
+    .item {
+      border-bottom: 1px solid gold;
+      padding: 15px 0;
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      justify-content: space-between;
+    }
+    img { width: 100px; border-radius: 10px; }
+    .info { flex: 1; }
+    .empty { text-align: center; font-size: 18px; margin-top: 50px; }
+    .remove-btn {
+      background-color: red;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .checkout-btn {
+      margin-top: 30px;
+      padding: 12px 20px;
+      background-color: gold;
+      color: black;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Your Cart</h1>
+  <a href="index.html" title="Back to Home" style="color: gold; text-decoration: none; font-size: 24px;">🏠</a>
+
+  <div id="cartItems"></div>
+  <div id="checkoutContainer"></div>
+
+  <script>
+    const cartContainer = document.getElementById("cartItems");
+    const checkoutContainer = document.getElementById("checkoutContainer");
+    let cart = JSON.parse(localStorage.getItem("cartItems") || "[]");
+
+    function renderCart() {
+      cartContainer.innerHTML = "";
+
+      if (cart.length === 0) {
+        cartContainer.innerHTML = "<div class='empty'>Your cart is empty.</div>";
+        checkoutContainer.innerHTML = "";
+      } else {
+        cart.forEach((item, index) => {
+          cartContainer.innerHTML += `
+            <div class="item">
+              <img src="${item.image}" alt="Product ${index + 1}">
+              <div class="info">
+                <p><strong>Size:</strong> ${item.size}"</p>
+                <p><strong>Quantity:</strong> ${item.quantity}</p>
+              </div>
+              <button class="remove-btn" onclick="removeItem(${index})">Remove</button>
+            </div>
+          `;
+        });
+
+        // Show checkout button if there are items
+        checkoutContainer.innerHTML = `
+          <a href="checkout.html">
+            <button class="checkout-btn">Proceed to Checkout</button>
+          </a>
+        `;
+      }
+    }
+
+    function removeItem(index) {
+      cart.splice(index, 1);
+      localStorage.setItem("cartItems", JSON.stringify(cart));
+      renderCart(); // Rerender without reloading
+    }
+
+    renderCart();
+  </script>
+</body>
+</html>

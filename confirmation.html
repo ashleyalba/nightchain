@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Order Confirmed | Night Chain</title>
+  <style>
+    body {
+      background-color: #000;
+      color: gold;
+      font-family: 'Georgia', serif;
+      padding: 30px;
+      text-align: center;
+    }
+
+    .box {
+      border: 1px solid gold;
+      border-radius: 10px;
+      padding: 30px;
+      max-width: 500px;
+      margin: auto;
+    }
+
+    .box h2 {
+      color: lightgreen;
+    }
+
+    .details {
+      text-align: left;
+      margin-top: 20px;
+    }
+
+    .home-btn {
+      margin-top: 25px;
+      padding: 10px 20px;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      background-color: gold;
+      color: black;
+      cursor: pointer;
+    }
+
+    .home-btn:hover {
+      background-color: #e6c200;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h2>✅ Order Confirmed!</h2>
+    <p>Thank you for shopping with Night Chain.</p>
+
+    <div class="details" id="userDetails"></div>
+
+    <button class="home-btn" onclick="goHome()">Back to Home</button>
+  </div>
+
+  <script>
+    const user = JSON.parse(localStorage.getItem("userInfo") || "{}");
+    const cart = JSON.parse(localStorage.getItem("cartItems") || "[]");
+
+    let detailHTML = `
+      <p><strong>Name:</strong> ${user.name || "N/A"}</p>
+      <p><strong>Address:</strong> ${user.address || "N/A"}</p>
+      <p><strong>Mobile:</strong> ${user.mobile || "N/A"}</p>
+      ${user.email ? `<p><strong>Email:</strong> ${user.email}</p>` : ""}
+      <p><strong>Total Items:</strong> ${cart.length}</p>
+    `;
+
+    document.getElementById("userDetails").innerHTML = detailHTML;
+
+    // Clear cart after confirmation
+    localStorage.removeItem("cartItems");
+
+    // Back to home function
+    function goHome() {
+      window.location.href = "index.html";
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Night Chain - Login</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #000;
+      color: gold;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    .login-container {
+      background-color: #111;
+      padding: 30px;
+      border-radius: 10px;
+      width: 350px;
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: gold;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #888;
+      border-radius: 4px;
+      background-color: #222;
+      color: gold;
+    }
+    button {
+      background-color: gold;
+      color: black;
+      padding: 10px;
+      width: 100%;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    button:hover {
+      background-color: #e6c200;
+    }
+    .error-message {
+      color: red;
+      margin-top: 10px;
+      text-align: center;
+    }
+    .back-home {
+      margin-top: 10px;
+      background-color: transparent;
+      border: 2px solid gold;
+      color: gold;
+    }
+    .back-home:hover {
+      background-color: gold;
+      color: black;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h2>Night Chain Login</h2>
+    <form id="loginForm">
+      <label for="username">Username:</label>
+      <input type="text" id="username" required>
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" required>
+
+      <button type="submit">Login</button>
+      <button type="button" class="back-home" onclick="goHome()">Back to Home</button>
+
+      <div id="errorMessage" class="error-message"></div>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value;
+      const errorDiv = document.getElementById("errorMessage");
+      errorDiv.textContent = "";
+
+      let users = JSON.parse(localStorage.getItem("users")) || [];
+
+      const matchedUser = users.find(user => user.username === username && user.password === password);
+
+      if (matchedUser) {
+        localStorage.setItem("isLoggedIn", "true");
+        localStorage.setItem("currentUser", username);
+        alert("Login successful! Redirecting to products...");
+        window.location.href = "products.html";
+      } else {
+        errorDiv.textContent = "Invalid username or password.";
+      }
+    });
+
+    function goHome() {
+      window.location.href = "index.html";
+    }
+  </script>
+</body>
+</html>

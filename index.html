@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Night Chain | Home</title>
+  <style>
+    body { margin: 0; font-family: 'Georgia', serif; background-color: #000; color: gold; }
+    header, nav { display: flex; justify-content: space-between; align-items: center; padding: 15px 30px; background-color: #000; border-bottom: 1px solid gold; }
+    nav a { color: gold; text-decoration: none; margin: 0 15px; font-weight: bold; }
+    nav a:hover { color: white; }
+    .hero { display: flex; justify-content: space-between; align-items: center; padding: 50px; flex-wrap: wrap; }
+    .hero-text { max-width: 500px; }
+    .hero-text h1 { font-size: 48px; line-height: 1.2; }
+    .hero-text p { font-size: 18px; margin-top: 10px; }
+    .buttons a {
+      margin: 10px 10px 0 0;
+      display: inline-block;
+      padding: 10px 20px;
+      border: 2px solid gold;
+      color: gold;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+    .buttons a:hover { background-color: gold; color: black; }
+    .social-icons { margin-top: 20px; }
+    .social-icons img {
+      width: 24px;
+      margin-right: 10px;
+    }
+    footer { text-align: center; padding: 20px; font-size: 14px; border-top: 1px solid gold; margin-top: 40px; }
+  </style>
+</head>
+
+<body>
+  <div id="navbar-container"></div>
+
+  <div style="margin-top: 70px;">
+    <section class="hero">
+      <div class="hero-text">
+        <h1>WHERE ELEGANCE<br>MEETS TIMELESS LUXURY</h1>
+        <p>ELEVATE YOUR STYLE WITH NIGHT CHAIN—LUXURY JEWELRY DESIGNED TO SHINE AS BRIGHT AS YOU.</p>
+        <div class="buttons">
+          <a href="#" onclick="handleOrderNow()">ORDER NOW</a>
+          <a href="products.html">VIEW PRODUCTS</a>
+        </div>
+        <div class="social-icons">
+           <a href="https://www.instagram.com/nightchain_official?igsh=ZW13eGUzbHdkbTA4" target="_blank" aria-label="Night Chain Instagram">
+            <img src="instagram.png" alt="Instagram Icon">
+          </a>
+          <a href="tel:0927 056 3614" aria-label="Call Night Chain">
+            <img src="phone.png" alt="Phone Icon">
+          </a>
+        </div>
+      </div>
+      <img src="PROD 1.JPG" alt="Featured Jewelry" width="300">
+    </section>
+  </div>
+
+  <footer>&copy; 2025 Night Chain. All rights reserved.</footer>
+
+  <!-- Load Navbar -->
+  <script>
+    fetch("navbar.html")
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById("navbar-container").innerHTML = data;
+      });
+  </script>
+
+  <!-- Order Now Redirect -->
+  <script>
+    function handleOrderNow() {
+      window.location.href = "signup.html";
+    }
+  </script>
+</body>
+</html>

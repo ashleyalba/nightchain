@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Profile | Night Chain</title>
+  <style>
+    body {
+      background-color: #000;
+      color: gold;
+      font-family: 'Georgia', serif;
+      padding: 30px;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    .profile-box {
+      max-width: 600px;
+      margin: auto;
+      background-color: #111;
+      padding: 20px;
+      border-radius: 10px;
+      border: 1px solid gold;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: none;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px;
+      background-color: gold;
+      color: black;
+      border: none;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .order-history {
+      margin-top: 30px;
+    }
+
+    .order-item {
+      padding: 10px;
+      border-top: 1px solid gold;
+    }
+
+    .button-group {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .button-group button {
+      flex: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>User Profile</h2>
+  <div class="profile-box">
+    <form onsubmit="saveProfile(event)">
+      <label>Full Name:</label>
+      <input type="text" id="name" required />
+
+      <label>Mobile Number:</label>
+      <input type="tel" id="mobile" required placeholder="09123456789" />
+
+      <label>Email:</label>
+      <input type="email" id="email" />
+
+      <label>Address:</label>
+      <textarea id="address" rows="3" required></textarea>
+
+      <label>GCash Number:</label>
+      <input type="tel" id="gcash" required placeholder="0912XXXXXXX" />
+
+      <button type="submit">Save Profile</button>
+    </form>
+
+    <div class="button-group">
+      <button onclick="goHome()">Back to Home</button>
+      <button onclick="logout()">Logout</button>
+    </div>
+
+    <div class="order-history" id="orderHistory">
+      <h3>Order History</h3>
+      <!-- Order list populated by JS -->
+    </div>
+  </div>
+
+  <script>
+    // Prefill profile
+    const nameInput = document.getElementById("name");
+    const mobileInput = document.getElementById("mobile");
+    const emailInput = document.getElementById("email");
+    const addressInput = document.getElementById("address");
+    const gcashInput = document.getElementById("gcash");
+
+    const profileData = JSON.parse(localStorage.getItem("userProfile") || "{}");
+
+    nameInput.value = profileData.name || "";
+    mobileInput.value = profileData.mobile || "";
+    emailInput.value = profileData.email || "";
+    addressInput.value = profileData.address || "";
+    gcashInput.value = profileData.gcash || "";
+
+    function saveProfile(e) {
+      e.preventDefault();
+
+      const profile = {
+        name: nameInput.value,
+        mobile: mobileInput.value,
+        email: emailInput.value,
+        address: addressInput.value,
+        gcash: gcashInput.value
+      };
+
+      localStorage.setItem("userProfile", JSON.stringify(profile));
+      alert("Profile saved successfully!");
+    }
+
+    // Display order history
+    const orderHistoryDiv = document.getElementById("orderHistory");
+    const pastCart = JSON.parse(localStorage.getItem("orderHistory") || "[]");
+
+    if (pastCart.length > 0) {
+      pastCart.forEach((order, i) => {
+        const item = document.createElement("div");
+        item.className = "order-item";
+        item.innerHTML = `
+          <p><strong>Order #${i + 1}</strong></p>
+          <p>Items: ${order.length}</p>
+        `;
+        orderHistoryDiv.appendChild(item);
+      });
+    } else {
+      orderHistoryDiv.innerHTML += `<p>No orders yet.</p>`;
+    }
+
+    // Go back to homepage
+    function goHome() {
+      window.location.href = "index.html";
+    }
+
+    // Logout and go to signup
+    function logout() {
+      localStorage.removeItem("isLoggedIn");
+      localStorage.removeItem("currentUser");
+      alert("Logged out successfully!");
+      window.location.href = "signup.html";
+    }
+  </script>
+</body>
+</html>
